@@ -2,8 +2,10 @@
 
 one:
   body: MyText
-  post_id: 
+  post_id_id: 
+  user_id_id: 
 
 two:
   body: MyText
-  post_id: 
+  post_id_id: 
+  user_id_id: 
