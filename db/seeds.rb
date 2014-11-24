@@ -12,19 +12,22 @@ require 'faker'
 end
 users = User.all
 
-# Note: by calling `User.new` instead of `create`,
-# we create an instance of User which isn't immediately saved to the database.
+# Create Topics
 
-# The `skip_confirmation!` method sets the `confirmed_at` attribute
-# to avoid triggering an confirmation email when the User is saved.
-
-# The `save` method then saves this User to the database.
+15.times do
+  Topic.create!(
+    name:         Faker::Lorem.sentence,
+    description:  Faker::Lorem.paragraph
+  )
+end
+topics = Topic.all
 
 
 # Create Posts
 50.times do
   Post.create!(
     user:   users.sample,
+    topic: topics.sample,
     title:  Faker::Lorem.sentence,
     body:   Faker::Lorem.paragraph
   )
@@ -39,6 +42,36 @@ posts = Post.all
     body: Faker::Lorem.paragraph
   )
 end
+
+
+ # Create an admin user
+ admin = User.new(
+   name:     'Admin User',
+   email:    'admin@user.com',
+   password: 'password',
+   role:     'admin'
+ )
+ admin.skip_confirmation!
+ admin.save!
+ 
+ # Create a moderator
+ moderator = User.new(
+   name:     'Moderator User',
+   email:    'moderator@user.com', 
+   password: 'password',
+   role:     'moderator'
+ )
+ moderator.skip_confirmation!
+ moderator.save!
+ 
+ # Create a member
+ member = User.new(
+   name:     'Member User',
+   email:    'member@user.com',
+   password: 'password',
+ )
+ member.skip_confirmation!
+ member.save!
 
 puts "Seed Finished"
 puts "#{Post.count} posts created"
